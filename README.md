@@ -18,6 +18,30 @@ To start using the Cribbage Scoring System:
 2. Utilize the provided classes and methods to integrate Cribbage scoring into your Java applications.
 3. Explore the various scoring categories and ensure accurate point calculations for your Cribbage games.
 
+## Usage
+```java
+// Example usage of the Cribbage Scoring System
+
+public class Main {
+    public static void main(String[] args) {
+        // Define cards for a hand and the starter card
+        Card[] hand = {
+            new Card("C", "6"),
+            new Card("D", "4"),
+            new Card("S", "5"),
+            new Card("C", "J")
+        };
+        Card starter = new Card("C", "3");
+
+        // Calculate points for the hand
+        Counter counter = new Counter(hand, starter);
+        int points = counter.countPoints();
+
+        System.out.println("Total points for the hand: " + points);
+    }
+}
+```
+
 ## Contributing
 Contributions to the Cribbage Scoring System are encouraged! Whether you're adding new features, optimizing existing code, or fixing bugs, your contributions are valuable. Please refer to the [contributing guidelines](CONTRIBUTING.md) for more information.
 
