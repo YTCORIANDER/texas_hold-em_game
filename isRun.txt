@@ -1,0 +1,409 @@
+private boolean isRun (Set<Card> set) {
+		// In this method, we are going through the given set to check if it constitutes a run of 3 or more
+		// consecutive cards. To do this, we are going to create an array of 13 cells to represent the
+		// range of card ranks from 1 to 13. We go through each card and increment the cell corresponding to
+		// each card's rank. For example, an Ace (rank 1) would cause the first (index 0) cell to increment.
+		// An 8 would cause the 8th (index 7) cell to increment. When this loop is done, the array will
+		// contain 5 or less cells with values of 1 or more to represent the number of cards with each rank.
+		// Then we can use this array to search for 3 or more consecutive non-zero values to represent a run.
+		
+		int n = set.getLength();
+		
+		if (n <= 2) return false; // Run must be at least 3 in length.
+		
+		int[] rankArr = new int[13];
+		for (int i = 0; i < 13; i++) rankArr[i] = 0; // Ensure the default values are all 0.
+		
+		for (int i = 0; i < n; i++) {
+			rankArr[set.getElement(i).getRunRank()-1] += 1;
+		}
+
+		// Now search in the array for a sequence of n consecutive 1's.
+		int streak = 0;
+		int maxStreak = 0;
+		for (int i = 0; i < 13; i++) {
+			if (rankArr[i] == 1) {
+				streak++;
+				if (streak > maxStreak) maxStreak = streak;
+			} else {
+				streak = 0;
+			}
+		}
+		if (maxStreak == n) { // Check if this is the maximum streak.
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import java.util.Iterator;
+
+// public class Set<T> {
+//     private LinearNode<T> setStart;
+
+//     public Set() {
+//         setStart = null;
+//     }
+
+//     public void add(T element) {
+//         LinearNode <T> newNode = new LinearNode <T>(element);
+//         newNode.setNext(setStart);
+//         setStart = newNode;
+//     }
+
+//     public int getLength(){
+//         int count = 0;
+//         LinearNode <T> current = setStart;
+//         while (current != null){
+//             count++;
+//             current = current.getNext();
+//         }
+//         return count;
+//     }
+    
+//     public T getElement(int i){
+//         LinearNode <T> current = setStart;
+//         int count = 0;
+//         while (current != null){
+//             if (count == i){
+//             return current.getElement();
+//             }
+//             count++;
+//             current = current.getNext();
+//         }
+//         return null;  
+//     }
+
+//     public boolean contains(String string){
+//         LinearNode <T> current = setStart;
+//         while (current != null){
+//             if (current.getElement().equals(string)){
+//                 return true;
+//             }
+//             current = current.getNext();
+//         }
+//         return false;
+//     }
+
+//     public String toString(){
+//         StringBuilder s = new StringBuilder();
+//         LinearNode <T> current = setStart;
+//         while(current != null){
+//             s.append(current.getElement()).append(" ");
+//             current = current.getNext();
+//             }
+//             return s.toString();
+//         }
+
+//     public boolean contains(Card starter) {
+//         return false;
+//     }
+
+//     public Iterator<Card> iterator() {
+//         return null;
+//     }
+
+//     public Card[] toArray(Card[] cards) {
+//         return null;
+//     }
+
+//     public int size() {
+//         return 0;
+//     }
+
+//     public int getRunRank() {
+//         return 0;
+//     }
+
+//     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+// public class Counter {
+//     private PowerSet<Card> cardps;
+//     private Card starter;
+    
+//     public Counter(Card[] hand, Card starter) {
+//         this.starter = starter;
+//         Card[] allCards = Arrays.copyOf(hand, hand.length + 1);
+//         allCards[hand.length] = starter;
+//         cardps = new PowerSet<>(allCards);
+//         System.out.println(allCards[hand.length]);
+//         System.out.println(new PowerSet<>(allCards));
+//     }
+    
+//     public int countPoints() {
+//         int totalPoints = 0;
+//         //totalPoints += countFifteens();
+//         totalPoints += countPairs();
+//         totalPoints += countRuns();
+//         totalPoints += countFlush();
+//         return totalPoints;
+//     }
+    
+//     // private int countFifteens() {
+//     //     int points = 0;
+//     //     for (Set<Card> set : cardps.getSet()) {
+//     //         if (getSum(set) == 15) {
+//     //             points += 2;
+//     //         }
+//     //     }
+//     //     return points;
+//     // }
+
+    
+//     public int countPairs(Card[] hand) {
+//         Map<Integer, Integer> rankCounts = new HashMap<>();
+//         for (Card card : hand) {
+//             int key = card.getRunRank();
+//             rankCounts.put(key, rankCounts.getOrDefault(key, 0) + 1);       
+//         }
+//         int point = 0;
+//         for (int rankCount : rankCounts.values()) {
+//             if (rankCount >= 2) {
+//                 point += rankCount / 2;
+//                 point = point *2;
+//             }
+//         }        
+//         return point;
+//     }   
+
+//     private boolean isRun(Set<Card> set) {
+//         //List<Card> cards = new ArrayList<>();
+//         Card[] cards = set.toArray(new Card[0]);
+//         Arrays.sort(cards, Comparator.comparing(Card::getRunRank));
+//         int length = 1;
+//         for (int i = 1; i < cards.length; i++) {
+//             if (cards[i].getRunRank() == cards[i-1].getRunRank() + 1) {
+//                 length++;
+//                 if (length >= 3) {
+//                     return true;
+//                 }
+//             } else {
+//                 length = 1;
+//             }
+//         }
+//         return false;
+//     }
+
+//     // private int countFifteens() {
+//     //     int points = 0;
+//     //     List<Integer> al = new ArrayList<Integer>();
+//     //     Integer[] arr = new Integer[al.size()];
+//     //     arr = al.toArray(arr);
+//     //     Set<Card>[] powerSets = cardps.getSet();
+//     //     for (int i = 0; i < cardps.getLength(); i++) {
+//     //         Set<Card> set = powerSets.get(i);
+//     //         int sum = 0;
+//     //         for (int j = 0; j < set.size(); j++) {
+//     //             Card card = (Card)set.toArray(null)[j];
+//     //             sum += card.getRunRank();
+//     //         }
+//     //         if (sum == 15) {
+//     //             points += 2;
+//     //         }
+//     //     }
+//     //     return points;
+//     // }
+
+//         private int countFifteens(){
+//             List<Set<Card>> cardpsSets = new ArrayList<>();
+//             int sum = 0;
+//             int points = 0;
+//             for (Set<Card> set : cardpsSets) {
+//             Card[] setArray = set.toArray(new Card[set.size()]);
+//             int numFaceCards = 0;
+//             for (Card card : setArray) {
+//                 sum += card.getFifteenRank();
+//                 if (card.getRunRank() == starter.getRunRank()) {
+//                     numFaceCards++;
+//                 }
+//             }
+//             if (sum == 15) {
+//                 points += 2;
+//             }
+//         }
+//             return points;
+//         }
+
+//     private int countFlush(Card[] hand) {
+//         boolean flag = true;
+//         int points = 0;
+//         for (Card card : hand) {
+//             if (card.getSuit() != hand[0].getSuit()) {
+//                 flag = false;
+//                 break;
+//             }
+//         }
+//         if (flag) {
+//             points = 4;
+//             if (starter.getSuit() == hand[0].getSuit()) {
+//                 points = 5;
+//             }
+//         }
+//         return points;
+//     }
+
+//     private int countRuns() {
+//         int points = 0;
+//         int longestRun = 0;
+//         for (Set<Card> set : cardps.getSet()) {
+//             if (isRun(set)) {
+//                 int runLength = set.size();
+//                 if (runLength > longestRun) {
+//                     longestRun = runLength;
+//                     points = runLength;
+//                 } else if (runLength == longestRun) {
+//                     points += runLength;
+//                 }
+//             }
+//         }
+//         return points;
+//     }
+    
+// }
+    
+       
+
+// // import java.util.*;    
+// //     public class Counter {
+// //     private PowerSet<Card> cardps;
+// //     private Card starter;
+    
+// //     public Counter(Card[] hand, Card starter) {
+// //         this.starter = starter;
+// //         Card[] allCards = Arrays.copyOf(hand, hand.length + 1);
+// //         allCards[hand.length] = starter;
+// //         cardps = new PowerSet<>(allCards);
+// //     }
+    
+// //     public int countPoints() {
+// //         int points = 0;
+// //         int longestRun = 0;
+// //         int longestRunPoints = 0;
+// //         boolean hasFlush = false;
+// //         boolean hasStarterFlush = false;
+        
+// //         List<Set<Card>> cardpsSets = new ArrayList<>();
+// //         for (Set<Card> set : cardpsSets) {
+// //             int sum = 0;
+// //             int numFaceCards = 0;
+// //             int runLength = 0;
+// //             Card[] setArray = set.toArray(new Card[set.size()]);
+            
+// //             // Check for fifteen
+// //             for (Card card : setArray) {
+// //                 sum += card.getFifteenRank();
+// //                 if (card.getRunRank() == starter.getRunRank()) {
+// //                     numFaceCards++;
+// //                 }
+// //             }
+// //             if (sum == 15) {
+// //                 points += 2;
+// //             }
+            
+// //             // Check for runs
+// //             Arrays.sort(setArray);
+// //             for (int i = 0; i < setArray.length - 1; i++) {
+// //                 if (setArray[i].getRunRank() + 1 == setArray[i+1].getRunRank()) {
+// //                     runLength++;
+// //                 } else {
+// //                     if (runLength >= 2) {
+// //                         if (runLength > longestRun) {
+// //                             longestRun = runLength;
+// //                             longestRunPoints = runLength;
+// //                         } else if (runLength == longestRun) {
+// //                             longestRunPoints += runLength;
+// //                         }
+// //                     }
+// //                     runLength = 0;
+// //                 }
+// //             }
+// //             if (runLength >= 2) {
+// //                 if (runLength > longestRun) {
+// //                     longestRun = runLength;
+// //                     longestRunPoints = runLength;
+// //                 } else if (runLength == longestRun) {
+// //                     longestRunPoints += runLength;
+// //                 }
+// //             }
+            
+// //             // Check for flush
+// //             String suit = null;
+// //             boolean isFlush = true;
+// //             for (Card card : setArray) {
+// //                 if (suit == null) {
+// //                     suit = card.getSuit();
+// //                 } else if (card.getSuit() != suit) {
+// //                     isFlush = false;
+// //                     break;
+// //                 }
+// //             }
+// //             if (isFlush) {
+// //                 hasFlush = true;
+// //                 if (suit == starter.getSuit()) {
+// //                     hasStarterFlush = true;
+// //                 }
+// //             }
+// //         }
+        
+// //         if (hasFlush) {
+// //             points += 4;
+// //             if (hasStarterFlush) {
+// //                 points += 1;
+// //             }
+// //         }
+// //         if (longestRunPoints > 0) {
+// //             points += longestRunPoints;
+// //         }
+// //         return points;
+// //     }
+    
+// //     private boolean isRun(Set<Card> set) {
+// //         Card[] setArray = set.toArray(new Card[set.size()]);
+// //         Arrays.sort(setArray);
+// //         for (int i = 0; i < setArray.length - 1; i++) {
+// //             if (setArray[i].getRunRank() + 1 != setArray[i+1].getRunRank()) {
+// //                 return false;
+// //             }
+// //         }
+// //         return true;
+// //     }
+// // }
