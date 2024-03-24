@@ -14,7 +14,7 @@ Cribbage is a classic card game that remains popular to this day. This project a
 ## Getting Started
 To start using the Cribbage Scoring System:
 
-1. Clone this repository: `git clone https://github.com/yourusername/cribbage-scoring.git`
+1. Clone this repository: `git clone https://github.com/YTCORIANDER/texas_hold-em_game.git`
 2. Utilize the provided classes and methods to integrate Cribbage scoring into your Java applications.
 3. Explore the various scoring categories and ensure accurate point calculations for your Cribbage games.
 
